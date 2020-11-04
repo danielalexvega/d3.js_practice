@@ -5,9 +5,22 @@ const DUMMY_DATA = [
   { id: 'd4', value: 6, region: 'Germany' }
 ];
 
-d3.select('div')
-  .selectAll('p')
+// d3.select('div')
+//   .selectAll('p')
+//   .data(DUMMY_DATA)
+//   .enter()
+//   .append('p')
+//   .text(dta => dta.region);
+
+const container = d3.select('div')
+  .classed('container', true)
+  .style('border', '1px solid red');
+
+container
+  .selectAll('.bar')
   .data(DUMMY_DATA)
   .enter()
-  .append('p')
-  .text(dta => dta.region);
+  .append('div')
+  .classed('bar', true)
+  .style('width', '50px')
+  .style('height', data => (data.value * 15) + 'px');
