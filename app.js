@@ -12,15 +12,19 @@ const DUMMY_DATA = [
 //   .append('p')
 //   .text(dta => dta.region);
 
-const container = d3.select('div')
-  .classed('container', true)
-  .style('border', '1px solid red');
+const xScale = d3.scaleBand().domain(DUMMY_DATA.map(dataPoint => dataPoint.region)).rangeRound([0, 250]).padding(0.1);
+const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
 
-container
+const container = d3.select('svg')
+  .classed('container', true);
+
+const bars = container
   .selectAll('.bar')
   .data(DUMMY_DATA)
   .enter()
-  .append('div')
+  .append('rect')
   .classed('bar', true)
-  .style('width', '50px')
-  .style('height', data => (data.value * 15) + 'px');
+  .attr('width', xScale.bandwidth())
+  .attr('height', data => 200 - yScale(data.value))
+  .attr('x', data => xScale(data.region))
+  .attr('y', data => yScale(data.value));
